@@ -1,23 +1,22 @@
-# Diabetes Prediction System using Machine Learning and Deep Neural Networks
+# Diabetes Prediction System using Machine Learning
 
 ## Project Overview
 
-This project implements a Diabetes Prediction System using both traditional Machine Learning models and a Deep Neural Network (DNN) on the Pima Indians Diabetes Dataset.
+This project implements a Diabetes Prediction System using Machine Learning techniques on the Pima Indians Diabetes Dataset.
 
-The project compares:
+The system compares two classification algorithms:
+
 - Logistic Regression
 - Decision Tree Classifier
-- Deep Neural Network (DNN)
 
-The system performs:
+The project includes:
 - Data preprocessing
 - Missing value handling
-- Feature scaling and normalization
+- Feature scaling
 - Model training
 - Performance evaluation
 - Visualization
 - Confusion matrix analysis
-- Error analysis
 
 ---
 
@@ -31,7 +30,7 @@ Target Variable:
   - 0 = Non-Diabetic
   - 1 = Diabetic
 
-Features:
+Input Features:
 - Pregnancies
 - Glucose
 - BloodPressure
@@ -43,3 +42,11 @@ Features:
 
 ---
 
+# Project Workflow
+
+## Step 1 — Data Loading
+
+The dataset is loaded using Pandas.
+
+```python
+df = pd.read_csv("diabetes.csv")
