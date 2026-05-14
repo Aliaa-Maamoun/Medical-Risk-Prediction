@@ -1,14 +1,14 @@
-# Project Workflow
-
-## Step 1 — Data Loading
+Step 1 — Data Loading
 
 The dataset is loaded using Pandas.
 
-```python
 df = pd.read_csv("diabetes.csv")
-## Step 2 — Data Cleaning
 
-Invalid zero values are replaced with `NaN` in:
+--------------------------------------------------
+
+Step 2 — Data Cleaning
+
+Invalid zero values are replaced with NaN in:
 
 - Glucose
 - BloodPressure
@@ -18,263 +18,70 @@ Invalid zero values are replaced with `NaN` in:
 
 Missing values are filled using the median.
 
-```python
-cols_with_zero = [
-    'Glucose',
-    'BloodPressure',
-    'SkinThickness',
-    'Insulin',
-    'BMI'
-]
+--------------------------------------------------
 
-df[cols_with_zero] = df[cols_with_zero].replace(0, np.nan)
-df.fillna(df.median(), inplace=True)
-```
+Step 3 — Feature and Target Separation
 
----
-
-## Step 3 — Feature and Target Separation
-
-```python
 X = df.drop("Outcome", axis=1)
 y = df["Outcome"]
-```
 
----
+--------------------------------------------------
 
-## Step 4 — Train-Test Split
+Step 4 — Train-Test Split
 
-The dataset is divided into:
+Dataset split:
 
 - 80% Training
 - 20% Testing
 
-```python
 train_test_split(test_size=0.2, random_state=42)
-```
 
----
+--------------------------------------------------
 
-# Traditional Machine Learning Models
+Step 5 — Feature Scaling
 
-## Logistic Regression
+StandardScaler is applied for Logistic Regression.
 
-Logistic Regression is used for binary classification and requires feature scaling.
+--------------------------------------------------
 
-### Feature Scaling
+Step 6 — Model Training
 
-```python
-from sklearn.preprocessing import StandardScaler
+Logistic Regression
+- Binary classification model
+- Uses scaled features
 
-scaler = StandardScaler()
+Decision Tree
+- max_depth = 5
+- Random state fixed for reproducibility
 
-X_train_scaled = scaler.fit_transform(X_train)
-X_test_scaled = scaler.transform(X_test)
-```
+--------------------------------------------------
 
-### Model Initialization
+Step 7 — Model Evaluation
 
-```python
-log_model = LogisticRegression(max_iter=1000)
-```
-
----
-
-## Decision Tree Classifier
-
-The Decision Tree model is configured using:
-
-```python
-tree_model = DecisionTreeClassifier(
-    max_depth=5,
-    random_state=42
-)
-```
-
----
-
-## Training Traditional Models
-
-```python
-log_model.fit(X_train_scaled, y_train)
-tree_model.fit(X_train, y_train)
-```
-
----
-
-## Predictions
-
-```python
-log_pred = log_model.predict(X_test_scaled)
-tree_pred = tree_model.predict(X_test)
-```
-
----
-
-# Deep Neural Network (DNN)
-
-## Feature Normalization
-
-The DNN model uses `MinMaxScaler` normalization.
-
-```python
-from sklearn.preprocessing import MinMaxScaler
-
-scaler = MinMaxScaler()
-
-X = scaler.fit_transform(X)
-```
-
----
-
-## DNN Architecture
-
-The Deep Neural Network contains:
-
-- Input Layer
-- Three Hidden Layers
-- Dropout Layers
-- Output Layer
-
-### Model Structure
-
-#### Hidden Layer 1
-- 128 neurons
-- ReLU activation
-- Dropout = 0.3
-
-#### Hidden Layer 2
-- 64 neurons
-- ReLU activation
-- Dropout = 0.3
-
-#### Hidden Layer 3
-- 32 neurons
-- ReLU activation
-
-#### Output Layer
-- 1 neuron
-- Sigmoid activation
-
----
-
-## DNN Model Creation
-
-```python
-model = Sequential()
-
-model.add(Dense(
-    128,
-    activation='relu',
-    input_shape=(X_train.shape[1],)
-))
-
-model.add(Dropout(0.3))
-
-model.add(Dense(64, activation='relu'))
-
-model.add(Dropout(0.3))
-
-model.add(Dense(32, activation='relu'))
-
-model.add(Dense(1, activation='sigmoid'))
-```
-
----
-
-## Model Compilation
-
-```python
-model.compile(
-    optimizer='adam',
-    loss='binary_crossentropy',
-    metrics=['accuracy']
-)
-```
-
----
-
-## Early Stopping
-
-Early stopping helps prevent overfitting.
-
-```python
-early_stop = EarlyStopping(
-    monitor='val_loss',
-    patience=5,
-    restore_best_weights=True
-)
-```
-
----
-
-## Model Training
-
-```python
-history = model.fit(
-    X_train,
-    y_train,
-    validation_split=0.2,
-    epochs=50,
-    batch_size=32,
-    callbacks=[early_stop],
-    verbose=1
-)
-```
-
----
-
-# Evaluation Metrics
-
-The following metrics are computed for all models:
+Evaluation Metrics:
 
 - Accuracy
 - Precision
 - Recall
 - F1 Score
 
-```python
-accuracy_score()
-precision_score()
-recall_score()
-f1_score()
-```
+--------------------------------------------------
 
----
+Step 8 — Visualization
 
-# Confusion Matrix
+Generated Visualizations:
 
-Confusion matrices are generated for:
+- Metrics comparison graph
+- Error analysis plots
+- Confusion matrices
 
-- Logistic Regression
-- Decision Tree
-- Deep Neural Network
+--------------------------------------------------
 
-The confusion matrix shows:
+Output
 
-- True Positives
-- True Negatives
-- False Positives
-- False Negatives
+The program generates:
 
----
-
-# Visualizations
-
-The project generates:
-
-- Metrics comparison graphs
-- Accuracy plots
-- Loss plots
-- Error analysis graphs
-- Confusion matrix visualizations
-
----
-
-# Model Saving
-
-The trained DNN model is saved as:
-
-```text
-diabetes_dnn_model.h5
-```
+- Metrics table
+- Performance comparison graphs
+- Error visualization
+- Confusion matrices
