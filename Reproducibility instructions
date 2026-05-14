@@ -1,3 +1,11 @@
+# Project Workflow
+
+## Step 1 — Data Loading
+
+The dataset is loaded using Pandas.
+
+```python
+df = pd.read_csv("diabetes.csv")
 ## Step 2 — Data Cleaning
 
 Invalid zero values are replaced with `NaN` in:
